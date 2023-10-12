@@ -5,7 +5,7 @@ const Input = ({ label, ...props }) => {
     <div>
       {label && (
         <label
-          className="text-p2 mb-[1px] text-p_foreground font-light w-full dark:text-gray-400  text-md sm:t "
+          className="text-p2 mb-[1px] text-gray-500 w-full dark:text-gray-400  text-md sm:t "
           htmlFor="income"
         >
           {label}

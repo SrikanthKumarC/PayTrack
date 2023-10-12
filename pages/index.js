@@ -16,14 +16,19 @@ export default function Home() {
     if (!formState.amount) return false;
     return formState.transaction;
   }
-
+  function deleteItem(id) {
+    const updatedStore = storeList.filter((list) => {
+      return list.id !== id;
+    })
+    setStoreList(updatedStore)
+  }
   console.log(formState);
   function handleSubmit(e) {
     e.preventDefault()
     if (!validateInput()) return;
     const newList = storeList;
     newList.push({ ...formState, id: uid.rnd() });
-    const emptyState = {id: '', amount: '', transaction: '', date: ''}
+    const emptyState = {id: '', amount: '', transaction: '', transactionDate: ''}
     setFormState(emptyState);
     setStoreList(newList);
   }
@@ -58,7 +63,7 @@ export default function Home() {
 
             />
           </div>
-          <div className='mb-2'>
+          <div className='mb-4'>
             <Input
                 type="text"
                 label="What"
@@ -86,7 +91,7 @@ export default function Home() {
           </div>
           <button
               type='submit'
-            className="hover:outline-dashed rounded-sm tracking-wide bg-emerald-900   text-white px-4 py-2 sm:p-2 mt-6"
+            className="hover:outline-dashed outline-1 hover:bg-emerald-800 hover:text-white transition-all hover:border-emerald-700 rounded-sm tracking-wide bg-emerald-100 dark:bg-emerald-600 text-black border-emerald-500 border-2   dark:text-white px-8 py-2 mt-6"
           >
             Add Details
           </button>
@@ -95,12 +100,14 @@ export default function Home() {
       {storeList.length > 0 && (
         <div className="wrapper border-t-4 overflow-x-auto mt-8 border-emerald-900 border-x-stone-200 dark:border-t-emerald-800 border-[1px] dark:border-t-2 dark:border-x-stone-800 gap-6 max-w-xl mx-auto">
           <table className="w-full  overflow-x-hidden overscroll-x-contain  text-center ">
-            <thead className="uppercase   py-2 border-b-[1px]  dark:bg-emerald-950  border-emerald-600 dark:border-emerald-800 bg-emerald-500 dark:text-white">
+            <thead className="uppercase   py-2 border-b-[1px]  dark:bg-emerald-900  border-emerald-600 dark:border-emerald-800 bg-emerald-100 dark:text-white">
               <tr className="py-2">
                 <th className=" py-3 px-2 text-right">#</th>
                 <th>Transaction</th>
                 <th className="py-4 text-right">Amount</th>
                 <th className="py-4 px-8 text-right">Category</th>
+                <th className="py-4 px-8 "></th>
+
               </tr>
             </thead>
             <tbody>
@@ -111,6 +118,7 @@ export default function Home() {
                     <td className="py-4 ">{list.transaction}</td>
                     <td className="py-4 text-right">{INR.format(list.amount)}</td>
                     <td className="py-4 px-8 text-right">{list.transactionDate}</td>
+                    <th onClick={() => deleteItem(list.id)} className="py-4 px-8"><i className="ri-delete-bin-2-line text-xl hover:text-red-500 cursor-pointer font-thin"></i></th>
                   </tr>
                 );
               })}
