@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:is(td, th):not(:first-of-type) {
+  min-inline-size: 6rem;
+}
