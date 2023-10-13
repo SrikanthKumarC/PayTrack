@@ -6,6 +6,9 @@ import React from "react";
 import { format, getMonth, parseISO } from "date-fns";
 import ShortUniqueId from "short-unique-id";
 import Table from "@/components/Table";
+import Balance from "@/components/Balance";
+import Menu from "@/components/Menu";
+
 export default function Home() {
   const [formState, setFormState] = React.useState({
     transactionDate: format(new Date(), "yyyy-M-dd"),
@@ -15,6 +18,7 @@ export default function Home() {
   const filterRef = React.useRef();
   const uid = new ShortUniqueId({ length: 10 });
   const [filterInput, setFilterInput] = React.useState("");
+  let balance = storeList.reduce((acc, currVal) => acc + +currVal.amount, 0);
 
   function validateInput() {
     if (!formState.transactionDate) return false;
@@ -55,17 +59,20 @@ export default function Home() {
   }
 
   const results = filterInput.length > 0 ? filteredResults : storeList;
-  console.log(results, "results");
+
   return (
-    <main className="mx-auto mt-2 ">
+      <>
+        <Menu />
+    <main className="mx-auto mt-2 max-w-xl">
       <Logo />
+      <Balance bms={balance} />
       {
         <form
           onSubmit={handleSubmit}
           action=""
-          className="dark:text-white bg-white dark:bg-transparent   m-2 mt-6 relative border-[2px] dark:border-[hsl(210,23%,20%)]  border-stone-200 rounded-lg max-w-xl mx-auto p-6 gap-4"
+          className="dark:text-white bg-white dark:bg-transparent   m-2 mt-6 relative border-[2px] dark:border-[hsl(210,23%,20%)]  border-stone-200 rounded-lg  p-6 gap-4"
         >
-          <h1 className="text-xl sm:text-2xl  text-center mb-8 font-light capitalize ">
+          <h1 className="text-xl sm:text-2xl  text-center mb-4 font-light capitalize ">
             start adding your transactions
           </h1>
           <div className="flex flex-col mb-2 self-center -mt-3 py-2 ">
@@ -103,10 +110,11 @@ export default function Home() {
               }
               value={formState.amount}
             />
+            
           </div>
           <button
             type="submit"
-            className="hover:outline-dashed outline-1 bg-emerald-800 hover:text-white transition-all hover:border-emerald-700 rounded-sm tracking-wide dark:bg-emerald-900 text-black border-emerald-600 border-2   dark:text-white px-8 py-2 mt-6"
+            className="hover:outline-dashed outline-1 bg-emerald-300 dark:hover:text-white transition-all hover:border-emerald-700 rounded-sm tracking-wide dark:bg-emerald-900 text-black border-emerald-600 border-2   dark:text-white px-8 py-2 mt-6"
           >
             Add Details
           </button>
@@ -117,7 +125,7 @@ export default function Home() {
           <div className="left flex items-center">
             <p className="mr-3 items-end    ">Filter by: </p>
             <input
-              className="rounded-sm dark:bg-transparent dark:border-slate-600 py-2 selection:bg-red-100 dark:active:bg-emerald-950 px-2 border focus:outline-emerald-300 hover:bg-emerald-50 shadow-inner"
+              className="rounded-sm dark:bg-transparent dark:isDarkInput hover:dark:bg-emerald-900 dark:border-slate-600 py-2 selection:bg-red-100 dark:active:bg-emerald-950 px-2 border focus:outline-emerald-300 hover:bg-emerald-50 shadow-inner"
               ref={filterRef}
               value={filterInput}
               onChange={(e) => {
@@ -154,5 +162,7 @@ export default function Home() {
         </div>
       </>
     </main>
+      </>
+
   );
 }

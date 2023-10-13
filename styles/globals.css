@@ -6,3 +6,10 @@
 :is(td, th):not(:first-of-type) {
   min-inline-size: 4rem;
 }
+
+
+@layer utilities{
+.isDarkInput{
+  color-scheme: dark;
+}
+}

@@ -12,7 +12,7 @@ const Input = ({ label, ...props }) => {
         </label>
       )}
       <input
-        className=" p-2  text-lg rounded-sm  focus:outline-solid outline-emerald-800 dark:hover:outline-emerald-800 dark:focus:bg-neutral-900 dark:focus:outline-emerald-800 dark:border-gray-600 dark:bg-transparent dark:border-[1px] m-0 border-2 w-full"
+        className=" p-2  dark:isDarkInput text-lg rounded-sm  focus:outline-solid outline-emerald-800 dark:hover:outline-emerald-800 dark:focus:bg-neutral-900 dark:focus:outline-emerald-800 dark:border-gray-600 dark:bg-transparent dark:border-[1px] m-0 border-2 w-full"
         {...props}
         id={label}
       />
