@@ -1,15 +1,23 @@
 import React from "react";
-
+import Link from "next/link";
 const Page = () => {
   return (
     <div className="px-6 py-4 dark:text-stone-300">
-      <h1 className="block mb-4 text-2xl">Design System</h1>
+      <h1 className="block mb-4 text-2xl">About</h1>
 
       <h2 className="max-w-[34ch] mb-4">
         Designed and Implemented using Next.js, TailwindCSS, Node.js, Express.js
         and MySQL.
       </h2>
-
+      <p className="mb-4 transition-all">
+        By{" "}
+        <Link
+          className="hover:text-green-500 font-bold hover:underline"
+          href="https://www.linkedin.com/in/c-srikanth/" target="_blank"
+        >
+          Srikanth Cheruku
+        </Link>
+      </p>
       <p className="tracking-wide text-lg font mb-2">Brand Colors</p>
       <p className="mb-[1px]">Emerald </p>
       <div className="flex flex-wrap gap-4 ">
