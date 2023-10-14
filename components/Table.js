@@ -1,10 +1,4 @@
-function Table({ children, values, deleteItem }) {
-  // <DataTable value={products} tableStyle={{ minWidth: "50rem" }}>
-  //   <Column field="code" header="Code"></Column>
-  //   <Column field="name" header="Name"></Column>
-  //   <Column field="category" header="Category"></Column>
-  //   <Column field="quantity" header="Quantity"></Column>
-  // </DataTable>;
+function Table({ children, values, deleteItem, limited = true }) {
   let INR = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "INR",
@@ -27,6 +21,12 @@ function Table({ children, values, deleteItem }) {
       </div>
     );
   }
+  let newValues = values;
+  if (limited) {
+    newValues = values.map((val, idx) => {
+      if (idx < 10) return val;
+    });
+  }
   return (
     <>
       <table className="w-full transition-all overflow-x-hidden overscroll-x-contain  text-center ">
@@ -34,7 +34,8 @@ function Table({ children, values, deleteItem }) {
           <tr className="py-2">{children}</tr>
         </thead>
         <tbody>
-          {values.map((list, idx) => {
+          {newValues.map((list, idx) => {
+            if (!list) return;
             return (
               <tr key={list.id} className="border-b-[2px] border-y-stone-900">
                 <td className="py-4 text-right">{idx + 1}</td>
