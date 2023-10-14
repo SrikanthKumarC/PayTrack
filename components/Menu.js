@@ -16,30 +16,33 @@ const Menu = () => {
   ];
 
   return (
-    <div className="flex bottom-0 sm:static sm:block sm:float-left  -mx-4 py-2 -my-6 h-full fixed  border-r dark:border-gray-800">
-      {navElements.map((element) => {
-        const activeClass =
-          element.link == path
-            ? "dark:bg-emerald-800 border-r-emerald-700 bg-emerald-100"
-            : "";
-        return (
-          <div
-            key={element.link}
-            className={`item flex gap-2 justify-center  self-center   px-6 py-2 border-r-4 ${activeClass}`}
-          >
-            <Link href={element.link} className="flex gap-2">
-              <i
-                className={`${element.icon} text-xl  dark:text-white font-bold text-emerald-700 `}
-                title="Home"
-              ></i>
-              <p className="self-center hidden lg:block dark:text-white text-emerald-700 font-bold">
-                {element.label}
-              </p>
-            </Link>
-          </div>
-        );
-      })}
-    </div>
+    <>
+    <div className=" clear-both h-4"></div>
+      <div className="bottom-0 -mx-4 fixed flex justify-center shadow-[0px_0px_50px_1px_#00000024]    w-screen bg-white">
+        {navElements.map((element) => {
+          const activeClass =
+            element.link == path
+              ? "dark:bg-emerald-800 border-t-emerald-700 bg-emerald-100"
+              : "";
+          return (
+            <div
+              key={element.link}
+              className={`item flex gap-2 justify-center  self-center   px-6 py-2 border-t-4 ${activeClass}`}
+            >
+              <Link href={element.link} className="flex gap-2">
+                <i
+                  className={`${element.icon} text-xl  dark:text-white font-bold text-emerald-700 `}
+                  title="Home"
+                ></i>
+                <p className="self-center hidden lg:block dark:text-white text-emerald-700 font-bold">
+                  {element.label}
+                </p>
+              </Link>
+            </div>
+          );
+        })}
+      </div>
+    </>
   );
 };
 

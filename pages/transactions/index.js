@@ -10,7 +10,7 @@ function Transactions() {
         <Menu />
       </div>
 
-      <div className="wrapper border-t-4 overflow-x-auto border-emerald-900 border-x-stone-200 dark:border-t-emerald-800 border-[1px] dark:border-t-2 dark:border-x-stone-800 gap-6 max-w-xl mx-auto">
+      <div className="wrapper border-t-4 overflow-x-auto mb-8 border-emerald-900 border-x-stone-200 dark:border-t-emerald-800 border-[1px] dark:border-t-2 dark:border-x-stone-800 gap-6 max-w-xl mx-auto">
         <Table values={results} deleteItem={deleteItem} limited={false}>
           <th className=" py-3 px-2 text-right">#</th>
           <th>Transaction</th>
