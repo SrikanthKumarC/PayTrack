@@ -1,4 +1,9 @@
-function Table({ children, values, deleteItem, limited = true }) {
+function Table({
+  children,
+  values,
+  deleteItem,
+  limited = true,
+}) {
   let INR = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "INR",
@@ -39,7 +44,9 @@ function Table({ children, values, deleteItem, limited = true }) {
             return (
               <tr key={list.id} className="border-b-[2px] border-y-stone-900">
                 <td className="py-4 text-right">{idx + 1}</td>
-                <td className="py-4 ">{list.transaction}</td>
+                <td className="py-4 ">
+                  {list.transaction}
+                </td>
                 <td className="py-4 text-right">{INR.format(list.amount)}</td>
                 <td className="py-4 px-8 ">{list.transactionDate}</td>
                 <td onClick={() => deleteItem(list.id)} className="py-4 px-8">

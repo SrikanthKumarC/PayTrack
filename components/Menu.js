@@ -6,7 +6,7 @@ const Menu = () => {
   console.log(path);
 
   const navElements = [
-    // icons classes from remix-icons
+    // icon classes from remix-icons
     { link: "/", icon: "ri-home-heart-line", label: "Home" },
     {
       link: "/transactions",
