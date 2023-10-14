@@ -14,7 +14,7 @@ function Table({ children, values, deleteItem, limited = true }) {
           Empty Results
         </h2>
         <div className="flex justify-center">
-          <p className="dark:text-gray-200 mt-2">
+          <p className="dark:text-gray-200 mt-2 px-4">
             Either add some transactions or remove filters if applied
           </p>
         </div>

@@ -102,7 +102,7 @@ export default function Home() {
 
           {filterInput.length > 0 && (
             <button
-              className="border mt-2 w-full sm:w-fit hover:bg-emerald-50 shadow-inner  rounded-sm px-4 dark:border-slate-600 "
+              className="border py-2 mt-2 w-full sm:w-fit hover:bg-emerald-50 shadow-inner  rounded-sm px-4 dark:border-slate-600 "
               onClick={() => {
                 setFilterInput("");
                 setFilteredResults({});

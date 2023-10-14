@@ -22,12 +22,12 @@ const Menu = () => {
 
   return (
     <>
-      <div className="bottom-0 -mx-4 fixed flex justify-center shadow-[0px_0px_50px_1px_#00000024]    w-screen bg-white">
+      <div className="bottom-0 -mx-4 fixed flex justify-center shadow-[0px_0px_50px_1px_#00000024] dark:bg-emerald-900   w-screen bg-white">
         {navElements.map((element) => {
           const activeClass =
             element.link == path
               ? "dark:bg-emerald-800 border-t-emerald-700 bg-emerald-100 font-bold"
-              : "";
+              : "dark:border-t-emerald-900 border-t-white";
           return (
             <Link key={element.link} href={element.link} className="flex gap-2">
               <div
