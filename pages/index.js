@@ -2,34 +2,61 @@
 
 import Logo from "@/components/Logo";
 import Input from "@/components/low-level-components/Input";
-import React from "react";
-
+import React, { useEffect, useState } from "react";
+import { Toaster } from "sonner";
+import useAxiosPrivate from "@/hooks/useAxiosPrivate";
 import Table from "@/components/Table";
 import Balance from "@/components/Balance";
 import Menu from "@/components/Menu";
-
+import useAPI from "@/hooks/useAPI";
 import { TransactionContext } from "@/providers/transactionProvider";
-
+import { useQuery } from "react-query";
 export default function Home() {
-  const {
-    balance,
-    handleSubmit,
-    formState,
-    filterInput,
-    results,
-    deleteItem,
-    setFormState,
-    setFilterInput,
-    filterByMonth,
-    setFilteredResults,
-  } = React.useContext(TransactionContext);
+  const hanger = useAPI();
+  const privateAxios = useAxiosPrivate();
 
+  const {
+    isLoading,
+    error,
+    data: results,
+  } = useQuery("transactions", async () => {
+    const { data } = await privateAxios.get("/api/transactions");
+    return data;
+  });
+
+  console.log("data", results);
+  const { filterInput, setFilterInput, filterByMonth, filteredResults, setFilteredResults } =
+    React.useContext(TransactionContext);
+  const [formState, setFormState] = useState({ amount: 0 });
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const {
+      transaction: transactionName,
+      amount: transactionAmount,
+      transactionDate,
+    } = formState;
+    const transactionObj = {
+      transactionName,
+      transactionAmount,
+      transactionDate,
+    };
+    hanger.addTransaction(transactionObj);
+    setFormState({ amount: 0, transaction: "", transactionDate: "" });
+  };
+
+  let balance = results?.reduce((acc, curr) => {
+    return acc + curr.amount;
+  }, 0);
+
+  
+  const whatToShow = filterInput.length > 0 ? filteredResults : results;
   return (
     <>
       <Menu />
       <main className="mx-auto mt-2 max-w-xl">
         <Logo />
-        <Balance balance={balance} />
+        {isLoading ? <p>loading...</p> : <Balance balance={balance} />}
 
         <form
           onSubmit={handleSubmit}
@@ -100,7 +127,7 @@ export default function Home() {
             />
           </div>
 
-          {filterInput.length > 0 && (
+          {filterInput?.length > 0 && (
             <button
               className="border py-2 mt-2 w-full sm:w-fit hover:bg-emerald-50 shadow-inner  rounded-sm px-4 dark:border-slate-600 "
               onClick={() => {
@@ -114,7 +141,7 @@ export default function Home() {
         </div>
         <p className="text-gray-400"> Showing only last 10 transactions</p>
         <div className="wrapper border-t-4 overflow-x-auto border-emerald-900 border-x-stone-200 dark:border-t-emerald-800 border-[1px] dark:border-t-2 dark:border-x-stone-800 gap-6 max-w-xl mx-auto">
-          <Table values={results} deleteItem={deleteItem}>
+          <Table values={whatToShow} deleteItem={hanger.deleteTransaction}>
             <th className=" py-3 px-2 text-right">#</th>
             <th>Transaction</th>
             <th className="py-4 text-right">Amount</th>
@@ -123,6 +150,7 @@ export default function Home() {
           </Table>
         </div>
       </main>
+      <Toaster richColors />
     </>
   );
 }

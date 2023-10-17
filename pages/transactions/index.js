@@ -2,16 +2,29 @@ import { TransactionContext } from "@/providers/transactionProvider";
 import Table from "@/components/Table";
 import React from "react";
 import Menu from "@/components/Menu";
+import { useQuery } from "react-query";
+import useAxiosPrivate from "@/hooks/useAxiosPrivate";
 function Transactions() {
+  const privateAxios = useAxiosPrivate();
   const {
-    results,
     deleteItem,
     filterInput,
     setFilterInput,
     filterByMonth,
+    filteredResults,
     setFilteredResults,
   } = React.useContext(TransactionContext);
 
+  const {
+    isLoading,
+    error,
+    data: results,
+  } = useQuery("transactions", async () => {
+    const { data } = await privateAxios.get("/api/transactions");
+    return data;
+  });
+
+  const whatToShow = filterInput.length > 0 ? filteredResults : results;
   return (
     <div>
       <div className="">
@@ -44,7 +57,7 @@ function Transactions() {
         )}
       </div>
       <div className="wrapper border-t-4 overflow-x-auto mb-8 border-emerald-900 border-x-stone-200 dark:border-t-emerald-800 border-[1px] dark:border-t-2 dark:border-x-stone-800 gap-6 max-w-xl mx-auto">
-        <Table values={results} deleteItem={deleteItem} limited={false}>
+        <Table values={whatToShow} deleteItem={deleteItem} limited={false}>
           <th className=" py-3 px-2 text-right">#</th>
           <th>Transaction</th>
           <th className="py-4 text-right">Amount</th>

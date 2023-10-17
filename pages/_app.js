@@ -1,10 +1,22 @@
 import "@/styles/globals.css";
 import "remixicon/fonts/remixicon.css";
 import TransactionProvider from "@/providers/transactionProvider";
+import AuthProvider from "@/providers/authProvider";
+
+import { QueryClient, QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
+
+const queryClient = new QueryClient();
+
 export default function App({ Component, pageProps }) {
   return (
-    <TransactionProvider>
-      <Component {...pageProps} />
-    </TransactionProvider>
+    <AuthProvider>
+      <QueryClientProvider client={queryClient}>
+        <TransactionProvider>
+          <Component {...pageProps} />
+        </TransactionProvider>
+        <ReactQueryDevtools initialIsOpen />
+      </QueryClientProvider>
+    </AuthProvider>
   );
 }

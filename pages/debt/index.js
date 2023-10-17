@@ -2,20 +2,32 @@ import Menu from "@/components/Menu";
 import Input from "@/components/low-level-components/Input";
 import React from "react";
 import ShortUniqueId from "short-unique-id";
+import { useQuery } from "react-query";
+import useAPI from "@/hooks/useAPI";
+import useAxiosPrivate from "@/hooks/useAxiosPrivate";
 function Debt() {
   const [formState, setFormState] = React.useState({});
-  const [debtState, setDebtState] = React.useState([]);
-  function deleteItem(id) {
-    const updatedStore = debtState.filter((list) => {
-      return list.id !== id;
-    });
-    setDebtState(updatedStore);
-  }
-  function handleSubmit(e) {
+  const hanger = useAPI();
+
+  const privateAxios = useAxiosPrivate();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const uid = new ShortUniqueId({ length: 10 });
-    setDebtState([...debtState, { ...formState, id: uid }]);
-  }
+    const { name: debtName, amount: debtAmount, interest: debtInterest, period: debtPeriod } = formState;
+    hanger.addDebt({ debtName, debtAmount, debtInterest, debtPeriod });
+    setFormState({});
+  };
+
+  const {
+    isLoading,
+    error,
+    data: debtState,
+  } = useQuery("debts", async () => {
+    const { data } = await privateAxios.get("/api/debts");
+    console.log(data, 'debt data')
+    return data;
+  });
+
   let INR = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "INR",
@@ -77,7 +89,7 @@ function Debt() {
         </button>
       </form>
 
-      {!!debtState.length && (
+      {(debtState?.length !== 0) && (
         <table className=" max-w-xl  mx-auto w-full transition-all overflow-x-hidden overscroll-x-contain  text-center ">
           <thead className="uppercase    py-2 border-b-[1px]  dark:bg-emerald-900  border-emerald-600 dark:border-emerald-800 bg-emerald-100 dark:text-white">
             <tr className="py-2">
@@ -90,19 +102,22 @@ function Debt() {
             </tr>
           </thead>
           <tbody>
-            {debtState.map((list, idx) => {
+            {debtState?.map((list, idx) => {
               if (!list) return;
               return (
                 <tr
-                  key={list.id}
+                  key={list._id}
                   className="border-b-[2px] dark:border-x-2 dark:border-x-slate-600 dark:border-y-slate-600 border-y-stone-900"
                 >
                   <td className="py-4 text-right">{idx + 1}</td>
-                  <td className="py-4 ">{list.name}</td>
+                  <td className="py-4 ">{list.what}</td>
                   <td className="py-4">{list.interest}</td>
                   <td className="py-4">{list.period}</td>
                   <td className="py-4 text-right">{INR.format(list.amount)}</td>
-                  <td onClick={() => deleteItem(list.id)} className="py-4 px-8">
+                  <td
+                    onClick={() => hanger.deleteDebt(list._id)}
+                    className="py-4 px-8"
+                  >
                     <i className="ri-delete-bin-2-line text-xl hover:text-red-500 cursor-pointer font-thin"></i>
                   </td>
                 </tr>

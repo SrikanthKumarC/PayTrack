@@ -1,73 +1,45 @@
-import React from "react";
-import { format, getMonth, parseISO } from "date-fns";
-import ShortUniqueId from "short-unique-id";
+"use client";
 
+import React, { useEffect } from "react";
+import { format, getMonth, parseISO, set } from "date-fns";
+import { useState } from "react";
+import { useQuery } from "react-query";
+import useAxiosPrivate from "@/hooks/useAxiosPrivate";
 // Context
 export const TransactionContext = React.createContext({});
-
 function TransactionProvider({ children }) {
-  const [formState, setFormState] = React.useState({
-    transactionDate: format(new Date(), "yyyy-M-dd"),
+  const privateAxios = useAxiosPrivate();
+  const {
+    isLoading,
+    error,
+    data: results,
+  } = useQuery("transactions", async () => {
+    const { data } = await privateAxios.get("/api/transactions");
+    setStoreList(data);
+    return data;
   });
-  const [storeList, setStoreList] = React.useState([]);
+
+  const [storeList, setStoreList] = useState([]);
   const [filteredResults, setFilteredResults] = React.useState({});
-
-  const uid = new ShortUniqueId({ length: 10 });
   const [filterInput, setFilterInput] = React.useState("");
-  let balance = storeList.reduce((acc, currVal) => acc + +currVal.amount, 0);
-
-  function validateInput() {
-    if (!formState.transactionDate) return false;
-    if (!formState.amount) return false;
-    return formState.transaction;
-  }
-
-  function deleteItem(id) {
-    const updatedStore = storeList.filter((list) => {
-      return list.id !== id;
-    });
-    setStoreList(updatedStore);
-  }
-  console.log(filteredResults);
-
-  function handleSubmit(e) {
-    e.preventDefault();
-    if (!validateInput()) return;
-    const newList = storeList;
-    newList.push({ ...formState, id: uid.rnd() });
-    const emptyState = {
-      id: "",
-      amount: "",
-      transaction: "",
-      transactionDate: "",
-    };
-    setFormState(emptyState);
-    setStoreList(newList);
-  }
 
   function filterByMonth(date) {
     const storeByMonth = storeList.filter((store) => {
-      return (
-        getMonth(parseISO(store.transactionDate)) === getMonth(parseISO(date))
-      );
+      return getMonth(parseISO(store.when)) === getMonth(parseISO(date));
     });
     setFilteredResults(storeByMonth);
+    console.log(storeByMonth, "broo");
   }
 
-  const results = filterInput.length > 0 ? filteredResults : storeList;
+  // console.log(balance);
   return (
     <TransactionContext.Provider
       value={{
-        balance,
-        results,
-        filterByMonth,
-        formState,
-        handleSubmit,
-        setFormState,
+        filteredResults,
         setFilteredResults,
-        deleteItem,
+        filterByMonth,
+        filterInput,
         setFilterInput,
-        filterInput
       }}
     >
       {children}

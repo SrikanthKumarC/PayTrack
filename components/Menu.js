@@ -1,9 +1,29 @@
 import React from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import axios from "../axios";
+import { toast } from "sonner";
+import { useRouter } from "next/router";
+
 const Menu = () => {
   const path = usePathname();
-  console.log(path);
+  const router = useRouter();
+
+  const logout = () => {
+    axios
+      .get("/logout", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      })
+      .then((res) => {
+        toast.success("Logout successful");
+        console.log(res);
+        router.push("/login");
+      })
+      .catch((err) => console.log(err));
+  };
 
   const navElements = [
     // icon classes from remix-icons
@@ -44,6 +64,19 @@ const Menu = () => {
             </Link>
           );
         })}
+        <button onClick={logout}>
+          <div
+            className={`item flex gap-2 justify-center  self-center   px-8 py-4 border-t-4 `}
+          >
+            <i
+              className={`ri-logout-circle-line text-xl  dark:text-white  text-emerald-700 `}
+              title="Home"
+            ></i>
+            <p className="self-center hidden lg:block dark:text-white text-emerald-700 ">
+              Logout
+            </p>
+          </div>
+        </button>
       </div>
     </>
   );

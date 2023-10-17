@@ -1,14 +1,11 @@
-function Table({
-  children,
-  values,
-  deleteItem,
-  limited = true,
-}) {
+import format from "date-fns/format";
+
+function Table({ children, values, deleteItem, limited = true }) {
   let INR = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "INR",
   });
-  if (!values.length) {
+  if (!values?.length) {
     return (
       <div className="py-4">
         <h2
@@ -42,14 +39,14 @@ function Table({
           {newValues.map((list, idx) => {
             if (!list) return;
             return (
-              <tr key={list.id} className="border-b-[2px] border-y-stone-900">
+              <tr key={list._id} className="border-b-[2px] border-y-stone-900">
                 <td className="py-4 text-right">{idx + 1}</td>
-                <td className="py-4 ">
-                  {list.transaction}
-                </td>
+                <td className="py-4 ">{list.what}</td>
                 <td className="py-4 text-right">{INR.format(list.amount)}</td>
-                <td className="py-4 px-8 ">{list.transactionDate}</td>
-                <td onClick={() => deleteItem(list.id)} className="py-4 px-8">
+                <td className="py-4 px-8 ">
+                  {format(new Date(list.when), "dd-mm-yy")}
+                </td>
+                <td onClick={() => deleteItem(list._id)} className="py-4 px-8">
                   <i className="ri-delete-bin-2-line text-xl hover:text-red-500 cursor-pointer font-thin"></i>
                 </td>
               </tr>
