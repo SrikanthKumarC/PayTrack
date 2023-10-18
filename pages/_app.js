@@ -1,3 +1,5 @@
+'use client';
+
 import "@/styles/globals.css";
 import "remixicon/fonts/remixicon.css";
 import TransactionProvider from "@/providers/transactionProvider";
