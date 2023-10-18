@@ -4,11 +4,16 @@ import Link from "next/link";
 import axios from "../axios";
 import { toast } from "sonner";
 import { useRouter } from "next/router";
+import useAuth from "@/hooks/useAuth";
+import { TransactionContext } from "@/providers/transactionProvider";
+import { useContext } from "react";
 
 const Menu = () => {
+  const { query } = useContext(TransactionContext);
+
   const path = usePathname();
   const router = useRouter();
-
+  const { setAuth } = useAuth();
   const logout = () => {
     axios
       .get("/logout", {
@@ -18,6 +23,9 @@ const Menu = () => {
         withCredentials: true,
       })
       .then((res) => {
+        // don't try to query if they're logged out
+        query.invalidateQueries();
+        setAuth(null);
         toast.success("Logout successful");
         console.log(res);
         router.push("/login");
@@ -55,7 +63,7 @@ const Menu = () => {
               >
                 <i
                   className={`${element.icon} text-xl  dark:text-white  text-emerald-700 `}
-                  title="Home"
+                  title={element.label}
                 ></i>
                 <p className="self-center hidden lg:block dark:text-white text-emerald-700 ">
                   {element.label}
@@ -64,13 +72,13 @@ const Menu = () => {
             </Link>
           );
         })}
-        <button onClick={logout}>
+        <button onClick={logout} title="Logout">
           <div
             className={`item flex gap-2 justify-center  self-center   px-8 py-4 border-t-4 `}
           >
             <i
               className={`ri-logout-circle-line text-xl  dark:text-white  text-emerald-700 `}
-              title="Home"
+              title="Logout"
             ></i>
             <p className="self-center hidden lg:block dark:text-white text-emerald-700 ">
               Logout

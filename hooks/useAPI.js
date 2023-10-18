@@ -1,9 +1,14 @@
 import { useQueryClient, useMutation } from "react-query";
 import useAxiosPrivate from "@/hooks/useAxiosPrivate";
-
+import { TransactionContext } from "@/providers/transactionProvider";
+import { useContext } from "react";
 const useAPI = () => {
+  const { setQuery } = useContext(TransactionContext);
+
   const privateAxios = useAxiosPrivate();
   const queryClient = useQueryClient();
+
+  setQuery(queryClient);
   const deleteMutation = useMutation(
     async (id) => {
       console.log(id);
@@ -68,7 +73,7 @@ const useAPI = () => {
   hanger.deleteTransaction = deleteMutation.mutate;
   hanger.addDebt = addDebtMutation.mutate;
   hanger.deleteDebt = deleteDebtMutation.mutate;
-  
+
   return hanger;
 };
 

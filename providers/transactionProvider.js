@@ -8,6 +8,8 @@ import useAxiosPrivate from "@/hooks/useAxiosPrivate";
 // Context
 export const TransactionContext = React.createContext({});
 function TransactionProvider({ children }) {
+  const [query, setQuery] = useState(null);
+
   const privateAxios = useAxiosPrivate();
   const {
     isLoading,
@@ -40,6 +42,8 @@ function TransactionProvider({ children }) {
         filterByMonth,
         filterInput,
         setFilterInput,
+        setQuery,
+        query,
       }}
     >
       {children}
