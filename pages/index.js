@@ -1,4 +1,3 @@
-"use client";
 
 import Logo from "@/components/Logo";
 import Input from "@/components/low-level-components/Input";

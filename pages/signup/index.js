@@ -1,4 +1,3 @@
-"use client";
 import { useState } from "react";
 import Input from "@/components/low-level-components/Input";
 import { Toaster, toast } from "sonner";

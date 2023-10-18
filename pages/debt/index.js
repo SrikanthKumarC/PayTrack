@@ -1,4 +1,3 @@
-'use client';
 import Menu from "@/components/Menu";
 import Input from "@/components/low-level-components/Input";
 import React from "react";
