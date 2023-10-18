@@ -1,40 +1,42 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Expense Outflow Manager
 
-## Getting Started
+## Introduction 
 
-First, run the development server:
+The Expense Tracker App is a web application built with Next.js that helps users keep track of their expenses, income, and loans. This app provides a rich user experience, including automatic dark and light mode, making it easy and visually appealing to manage your financial information.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+With a user-friendly interface and robust functionality, this app offers a comprehensive solution for managing your finances. The data is stored and communicated through an Express.js backend server, ensuring secure and efficient handling of your financial information.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Features
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+- **Expense Tracking:** Keep a record of your daily expenses, categorize them, and monitor your spending habits.
+- **Income Management:** Record your income sources and track your earnings over time.
+- **Loan Management:** Keep track of loans you owe and loans you've given, including interest rates and due dates.
+- **Automatic Dark/Light Mode:** The app automatically adapts its theme based on the user's preferences or system settings, providing a seamless experience in all lighting conditions.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+## Technologies Used
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+- **Frontend:**
+  - Next.js
+  - React
+  - React-Query (for managing sever state)
+  - TailwindCSS (for styling)
+  - Axios (for making API requests)
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- **Backend:**
+  - Express.js
+  - MongoDB 
+  - RESTful API for data communication
 
-## Learn More
+- **Authentication:**
+  - Bcrypt and JWT was implemented in the backend.
 
-To learn more about Next.js, take a look at the following resources:
+## Installation
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+ Clone this repository to your local machine:
+ Make sure to setup the express backend API first.
+   ```bash
+   git clone https://github.com/SrikanthKumarC/simpleExpense.git
+   cd simpleExpense
+   npm install
+   npm run dev
+   
