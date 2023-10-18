@@ -4,7 +4,7 @@ import { Toaster, toast } from "sonner";
 import useAuth from "@/hooks/useAuth";
 import axios from "../../axios";
 import { useRouter } from "next/router";
-
+import Head from "next/head";
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -34,6 +34,14 @@ const Login = () => {
   };
   return (
     <div className="max-w-xl px-4 mx-auto mt-10">
+      <Head>
+        <title>Secure Login</title>
+        <meta
+          name="login"
+          content="Login to your account to get started"
+          key="desc"
+        />
+      </Head>
       <Toaster richColors />
       <h1 className="text-4xl mb-6">Login</h1>
       <button

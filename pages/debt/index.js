@@ -5,6 +5,7 @@ import ShortUniqueId from "short-unique-id";
 import { useQuery } from "react-query";
 import useAPI from "@/hooks/useAPI";
 import useAxiosPrivate from "@/hooks/useAxiosPrivate";
+import Head from "next/head";
 function Debt() {
   const [formState, setFormState] = React.useState({});
   const hanger = useAPI();
@@ -13,7 +14,12 @@ function Debt() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { name: debtName, amount: debtAmount, interest: debtInterest, period: debtPeriod } = formState;
+    const {
+      name: debtName,
+      amount: debtAmount,
+      interest: debtInterest,
+      period: debtPeriod,
+    } = formState;
     hanger.addDebt({ debtName, debtAmount, debtInterest, debtPeriod });
     setFormState({});
   };
@@ -24,7 +30,7 @@ function Debt() {
     data: debtState,
   } = useQuery("debts", async () => {
     const { data } = await privateAxios.get("/api/debts");
-    console.log(data, 'debt data')
+    console.log(data, "debt data");
     return data;
   });
 
@@ -34,6 +40,10 @@ function Debt() {
   });
   return (
     <>
+      <Head>
+        <title>Debts</title>
+        <meta name="debts" content="Manage your debts and loans" key="desc" />
+      </Head>
       <form
         onSubmit={handleSubmit}
         className="dark:text-white bg-white dark:bg-transparent   m-2 mt-6 relative border-[2px] dark:border-[hsl(210,23%,20%)] max-w-xl mx-auto  border-stone-200 rounded-lg  p-6 gap-4"
@@ -89,7 +99,7 @@ function Debt() {
         </button>
       </form>
 
-      {(debtState?.length !== 0) && (
+      {debtState?.length !== 0 && (
         <table className=" max-w-xl  mx-auto w-full transition-all overflow-x-hidden overscroll-x-contain  text-center ">
           <thead className="uppercase    py-2 border-b-[1px]  dark:bg-emerald-900  border-emerald-600 dark:border-emerald-800 bg-emerald-100 dark:text-white">
             <tr className="py-2">

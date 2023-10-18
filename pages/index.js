@@ -1,4 +1,3 @@
-
 import Logo from "@/components/Logo";
 import Input from "@/components/low-level-components/Input";
 import React, { useEffect, useState } from "react";
@@ -10,6 +9,7 @@ import Menu from "@/components/Menu";
 import useAPI from "@/hooks/useAPI";
 import { TransactionContext } from "@/providers/transactionProvider";
 import { useQuery } from "react-query";
+import Head from "next/head";
 export default function Home() {
   const hanger = useAPI();
   const privateAxios = useAxiosPrivate();
@@ -60,6 +60,14 @@ export default function Home() {
   const whatToShow = filterInput.length > 0 ? filteredResults : results;
   return (
     <>
+      <Head>
+        <title>Track Your Expenses</title>
+        <meta
+          name="Paytrack"
+          content="Track your expenses and incomes"
+          key="desc"
+        />
+      </Head>
       <Menu />
       <main className="mx-auto mt-2 max-w-xl">
         <Logo />
