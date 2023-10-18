@@ -18,13 +18,7 @@ const Login = () => {
     try {
       const result = await axios.post(
         "/auth",
-        JSON.stringify({ username, password }),
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          withCredentials: true,
-        }
+        JSON.stringify({ username, password })
       );
       // get status code
       console.log(JSON.stringify(result?.data));
