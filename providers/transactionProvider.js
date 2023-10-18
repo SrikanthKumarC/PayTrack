@@ -15,10 +15,15 @@ function TransactionProvider({ children }) {
     isLoading,
     error,
     data: results,
-  } = useQuery("transactions", async () => {
-    const { data } = await privateAxios.get("/api/transactions");
-    setStoreList(data);
-    return data;
+  } = useQuery({
+    queryKey: "transactionsStore",
+    queryFn: async () => {
+      const { data } = await privateAxios.get("/api/transactions");
+      setStoreList(data);
+      return data;
+    },
+    enabled: false,
+    retry: false,
   });
 
   const [storeList, setStoreList] = useState([]);

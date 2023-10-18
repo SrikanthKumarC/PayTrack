@@ -19,14 +19,23 @@ export default function Home() {
     isLoading,
     error,
     data: results,
-  } = useQuery("transactions", async () => {
-    const { data } = await privateAxios.get("/api/transactions");
-    return data;
+  } = useQuery({
+    queryKey: "transactions",
+    queryFn: async () => {
+      const { data } = await privateAxios.get("/api/transactions");
+      return data;
+    },
+    retry: false,
   });
 
   console.log("data", results);
-  const { filterInput, setFilterInput, filterByMonth, filteredResults, setFilteredResults } =
-    React.useContext(TransactionContext);
+  const {
+    filterInput,
+    setFilterInput,
+    filterByMonth,
+    filteredResults,
+    setFilteredResults,
+  } = React.useContext(TransactionContext);
   const [formState, setFormState] = useState({ amount: 0 });
 
   const handleSubmit = async (e) => {
@@ -49,7 +58,6 @@ export default function Home() {
     return acc + curr.amount;
   }, 0);
 
-  
   const whatToShow = filterInput.length > 0 ? filteredResults : results;
   return (
     <>

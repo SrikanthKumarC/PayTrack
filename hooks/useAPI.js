@@ -21,7 +21,7 @@ const useAPI = () => {
           data: {
             transactionId: id,
           },
-        });
+        }); 
       } catch (e) {
         console.error(e);
       }
@@ -73,6 +73,7 @@ const useAPI = () => {
   hanger.deleteTransaction = deleteMutation.mutate;
   hanger.addDebt = addDebtMutation.mutate;
   hanger.deleteDebt = deleteDebtMutation.mutate;
+  hanger.queryClient = queryClient;
 
   return hanger;
 };

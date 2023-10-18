@@ -7,10 +7,13 @@ import { useRouter } from "next/router";
 import useAuth from "@/hooks/useAuth";
 import { TransactionContext } from "@/providers/transactionProvider";
 import { useContext } from "react";
-
+import { useQueryClient } from "react-query";
+import useAPI from "@/hooks/useAPI";
 const Menu = () => {
   const { query } = useContext(TransactionContext);
+  const queryClient = useQueryClient();
 
+  const hanger = useAPI();
   const path = usePathname();
   const router = useRouter();
   const { setAuth } = useAuth();
@@ -22,9 +25,9 @@ const Menu = () => {
         },
         withCredentials: true,
       })
-      .then((res) => {
+      .then(async (res) => {
         // don't try to query if they're logged out
-        query.invalidateQueries();
+        hanger.queryClient.removeQueries();
         setAuth(null);
         toast.success("Logout successful");
         console.log(res);
