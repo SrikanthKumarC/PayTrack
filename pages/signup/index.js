@@ -31,10 +31,18 @@ const Signup = () => {
       );
       // get status code
       console.log(JSON.stringify(result?.data));
-      toast.success("Signup successful");
-      router.push("/login");
+      // show  toast for 5 seconds and redirect to login
+      toast.success(`Account created for ${username}, please login`);
     } catch (e) {
-      toast.error(e.message);
+      if (e?.response?.status === 409) {
+        // already a user with that username
+        toast.error("Username already taken");
+      } else if (e?.response?.status === 400) {
+        // already a user with that username
+        toast.error("Username or password missing");
+      } else {
+        toast.error(e.message); // show error message
+      }
     }
   };
   return (
@@ -43,25 +51,25 @@ const Signup = () => {
       <h1 className="text-4xl">Signup</h1>
       <form action="" className="mt-4" onSubmit={authenticate}>
         <Input
-          label={"Enter your username"}
+          label={"Choose a nice username"}
           type={"text"}
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
         <Input
-          label={"and your password"}
+          label={"and a good password"}
           type={"password"}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
         <Input
-          label={"and your password"}
+          label={"just one more time.."}
           type={"password"}
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
         />
-        <button className="bg-gray-600 text-white  p-2 px-4 mt-4">
-          Submit
+        <button className="bg-gray-600 text-white hover:bg-emerald-600 transition-all p-2 px-4 mt-4">
+          Create Account
         </button>
       </form>
     </div>

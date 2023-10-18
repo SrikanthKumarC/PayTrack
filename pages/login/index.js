@@ -9,7 +9,6 @@ import { useRouter } from "next/router";
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
   const router = useRouter();
 
   const { setAuth } = useAuth();
@@ -32,8 +31,10 @@ const Login = () => {
       console.log(JSON.stringify(result?.data));
       const accessToken = result?.data?.accessToken;
       setAuth({ username, password, accessToken });
-      toast.success("Login successful");
-      router.push("/");
+      toast.success("Login successful, redirecting...", { duration: 5000 });
+      setTimeout(() => {
+        router.push("/");
+      }, 2000);
     } catch (e) {
       toast.error(e.message);
     }
@@ -41,7 +42,13 @@ const Login = () => {
   return (
     <div className="max-w-xl px-4 mx-auto mt-10">
       <Toaster richColors />
-      <h1 className="text-4xl">Login</h1>
+      <h1 className="text-4xl mb-6">Login</h1>
+      <button
+        className="bg-emerald-600 w-full text-white  p-2 px-4 mt-4"
+        onClick={() => router.push("/signup")}
+      >
+        No account? Sign Up.
+      </button>
       <form action="" className="mt-4" onSubmit={authenticate}>
         <Input
           label={"Enter your username"}
@@ -59,7 +66,7 @@ const Login = () => {
           Submit
         </button>
       </form>
-
+      {/* sign up button */}
     </div>
   );
 };
