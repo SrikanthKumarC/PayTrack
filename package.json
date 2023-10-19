@@ -17,6 +17,7 @@
     "react": "^18",
     "react-dom": "^18",
     "react-query": "^3.39.3",
+    "react-spinners": "^0.13.8",
     "remixicon": "^3.5.0",
     "short-unique-id": "^5.0.3",
     "sonner": "^1.0.3"
