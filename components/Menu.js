@@ -53,7 +53,7 @@ const Menu = () => {
 
   return (
     <>
-      <div className="bottom-0 -mx-4 fixed flex justify-center shadow-[0px_0px_50px_1px_#00000024] dark:bg-emerald-900   w-screen bg-white">
+      <div className="bottom-0 z-10 -mx-4 fixed flex justify-center shadow-[0px_0px_50px_1px_#00000024] dark:bg-emerald-900   w-screen bg-white">
         {navElements.map((element) => {
           const activeClass =
             element.link == path
