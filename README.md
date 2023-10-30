@@ -35,8 +35,8 @@ With a user-friendly interface and robust functionality, this app offers a compr
  Clone this repository to your local machine:
  Make sure to setup the express backend API first.
    ```bash
-   git clone https://github.com/SrikanthKumarC/simpleExpense.git
-   cd simpleExpense
+   git clone https://github.com/SrikanthKumarC/PayTrack.git
+   cd PayTrack
    npm install
    npm run dev
    
