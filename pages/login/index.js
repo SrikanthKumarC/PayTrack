@@ -80,7 +80,7 @@ const Login = () => {
           />
           <button
             disabled={isLoading}
-            className="bg-gray-600 text-white  p-2 px-4 mt-4"
+            className={`${isLoading ? 'bg-gray-600' : 'bg-emerald-600'} text-white  p-2 px-4 mt-4`}
           >
             Submit
           </button>
