@@ -7,7 +7,7 @@ const Page = () => {
 
       <h2 className="max-w-[34ch] mb-4">
         Designed and Implemented using Next.js, TailwindCSS, Node.js, Express.js
-        and MySQL.
+        and MongoDB.
       </h2>
       <p className="mb-4 transition-all">
         By{" "}
