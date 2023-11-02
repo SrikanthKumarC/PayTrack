@@ -23,6 +23,7 @@
     "sonner": "^1.0.3"
   },
   "devDependencies": {
+    "@cloudflare/next-on-pages": "^1.7.2",
     "autoprefixer": "^10",
     "eslint": "^8",
     "eslint-config-next": "13.5.4",
