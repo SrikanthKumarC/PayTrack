@@ -9,7 +9,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 
 const queryClient = new QueryClient();
-
+export const runtime = 'edge';
 export default function App({ Component, pageProps }) {
   return (
     <AuthProvider>
