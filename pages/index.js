@@ -26,8 +26,6 @@ export default function Home() {
     },
     retry: false,
   });
-
-  console.log("data", results);
   const {
     filterInput,
     setFilterInput,

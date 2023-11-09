@@ -12,7 +12,6 @@ const useRefresh = () => {
         withCredentials: true,
       });
       // get status code
-      console.log(JSON.stringify(result?.data));
       const accessToken = result?.data?.accessToken;
       setAuth((prev) => {
         return { ...prev, accessToken: accessToken };

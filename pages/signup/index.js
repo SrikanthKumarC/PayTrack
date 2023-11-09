@@ -91,12 +91,19 @@ const Signup = () => {
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
+          <div className="flex self-center justify-between items-center align-middle content-center">
           <button
             disabled={isLoading ? true : false}
             className="hover:bg-gray-600 disabled:bg-gray-500 text-white cursor-pointer bg-emerald-600 transition-all p-2 px-4 mt-4"
           >
             Create Account
           </button>
+          {/* center two flex items in classname below */}
+          <button className="">
+            <a href="/login">Already have an account? Login</a>
+          </button>
+          </div>
+          
         </form>
       </div>
     </>
