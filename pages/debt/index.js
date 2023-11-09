@@ -30,7 +30,6 @@ function Debt() {
     data: debtState,
   } = useQuery("debts", async () => {
     const { data } = await privateAxios.get("/api/debts");
-    console.log(data, "debt data");
     return data;
   });
 

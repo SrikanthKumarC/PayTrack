@@ -5,8 +5,6 @@ export const LoadingContext = createContext({});
 
 const LoadingProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
-
-  console.log("loading changed to ", loading);
   return (
     <LoadingContext.Provider value={{ loading, setLoading }}>
       {children}
