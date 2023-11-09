@@ -6,10 +6,13 @@ import axios from "../../axios";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import { BarLoader } from "react-spinners";
+import { LoadingContext } from "@/providers/loadingProvider";
+import React from "react";
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [isLoading, setIsLoading] = useState(false); // for loading spinner
+  const { loading: isLoading, setLoading: setIsLoading } =
+    React.useContext(LoadingContext); // for loading spinner
   const router = useRouter();
 
   const { setAuth } = useAuth();
@@ -17,6 +20,11 @@ const Login = () => {
     setIsLoading(true);
     e.preventDefault();
     // get access token from server using username and password and use credentials
+    if (!username || !password) {
+      toast.error("Username or password missing");
+      setIsLoading(false);
+      return;
+    }
 
     try {
       const result = await axios.post(
@@ -31,15 +39,29 @@ const Login = () => {
       setIsLoading(false);
       router.push("/");
     } catch (e) {
-      toast.error(e.message);
+      if (e.code === "ECONNREFUSED") {
+        toast.error("Server is not running");
+        setIsLoading(false);
+        return;
+      }
+      console.log(e);
+      if (e?.response?.status === 403) {
+        // already a user with that username
+        toast.error("Username or password incorrect");
+      } else if (e?.response?.status === 400) {
+        // already a user with that username
+        toast.error("Username or password missing");
+      } else {
+        toast.error("Something went wrong"); // show error message
+      }
       setIsLoading(false);
     }
   };
   return (
     <>
-      <BarLoader
+    <BarLoader
         color="#059669"
-        loading={isLoading}
+        loading={typeof isLoading === "undefined" ? false : isLoading}
         cssOverride={{
           position: "absolute",
           top: 0,
@@ -80,7 +102,9 @@ const Login = () => {
           />
           <button
             disabled={isLoading}
-            className={`${isLoading ? 'bg-gray-600' : 'bg-emerald-600'} text-white  p-2 px-4 mt-4`}
+            className={`${
+              isLoading ? "bg-gray-600" : "bg-emerald-600"
+            } text-white  p-2 px-4 mt-4`}
           >
             Submit
           </button>

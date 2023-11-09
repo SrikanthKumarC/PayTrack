@@ -3,18 +3,24 @@ import Input from "@/components/low-level-components/Input";
 import { Toaster, toast } from "sonner";
 import useAuth from "@/hooks/useAuth";
 import axios from "../../axios";
+import { BarLoader } from "react-spinners";
+import { LoadingContext } from "@/providers/loadingProvider";
 import { useRouter } from "next/router";
+import React from "react";
 import Head from "next/head";
 const Signup = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const router = useRouter();
+  const { loading: isLoading, setLoading: setIsLoading } =
+    React.useContext(LoadingContext);
   const authenticate = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     // get access token from server using username and password and use credentials
     if (confirmPassword !== password) {
       toast.error("Passwords do not match");
+      setIsLoading(false);
       return;
     }
     try {
@@ -32,6 +38,7 @@ const Signup = () => {
       console.log(JSON.stringify(result?.data));
       // show  toast for 5 seconds and redirect to login
       toast.success(`Account created for ${username}, please login`);
+      setIsLoading(false);
     } catch (e) {
       if (e?.response?.status === 409) {
         // already a user with that username
@@ -42,40 +49,57 @@ const Signup = () => {
       } else {
         toast.error(e.message); // show error message
       }
+      setIsLoading(false);
     }
   };
   return (
-    <div className="max-w-xl px-4 mx-auto mt-10">
-      <Head>
-        <title>Sign up securely</title>
-        <meta name="signup" content="Sign up as a user to login" key="desc" />
-      </Head>
-      <Toaster richColors />
-      <h1 className="text-4xl">Signup</h1>
-      <form action="" className="mt-4" onSubmit={authenticate}>
-        <Input
-          label={"Choose a nice username"}
-          type={"text"}
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <Input
-          label={"and a good password"}
-          type={"password"}
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <Input
-          label={"just one more time.."}
-          type={"password"}
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-        />
-        <button className="bg-gray-600 text-white hover:bg-emerald-600 transition-all p-2 px-4 mt-4">
-          Create Account
-        </button>
-      </form>
-    </div>
+    <>
+      <BarLoader
+        color="#059669"
+        loading={typeof isLoading === "undefined" ? false : isLoading}
+        cssOverride={{
+          position: "absolute",
+          top: 0,
+          width: "calc(100% + 3rem)",
+          marginLeft: "-4rem",
+          marginRight: "-4rem",
+        }}
+      />
+      <div className="max-w-xl px-4 mx-auto mt-10">
+        <Toaster richColors />
+        <Head>
+          <title>Sign up securely</title>
+          <meta name="signup" content="Sign up as a user to login" key="desc" />
+        </Head>
+        <h1 className="text-4xl">Signup</h1>
+        <form action="" className="mt-4" onSubmit={authenticate}>
+          <Input
+            label={"Choose a nice username"}
+            type={"text"}
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <Input
+            label={"and a good password"}
+            type={"password"}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <Input
+            label={"just one more time.."}
+            type={"password"}
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          />
+          <button
+            disabled={isLoading ? true : false}
+            className="hover:bg-gray-600 disabled:bg-gray-500 text-white cursor-pointer bg-emerald-600 transition-all p-2 px-4 mt-4"
+          >
+            Create Account
+          </button>
+        </form>
+      </div>
+    </>
   );
 };
 
