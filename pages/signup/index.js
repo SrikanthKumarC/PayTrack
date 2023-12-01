@@ -43,7 +43,10 @@ const Signup = () => {
       if (e?.response?.status === 409) {
         // already a user with that username
         toast.error("Username already taken");
-      } else if (e?.response?.status === 400) {
+      } else if (e?.response?.status === 404) {
+        toast.error("Server not found, please try again later")
+      }
+       else if (e?.response?.status === 400) {
         // already a user with that username
         toast.error("Username or password missing");
       } else {
@@ -91,15 +94,14 @@ const Signup = () => {
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
-          <div className="flex self-center justify-between items-center align-middle content-center">
+          <div className="flex flex-col gap-2  sm:flex-row mt-4 justify-between">
           <button
             disabled={isLoading ? true : false}
-            className="hover:bg-gray-600 disabled:bg-gray-500 text-white cursor-pointer bg-emerald-600 transition-all p-2 px-4 mt-4"
+            className="hover:bg-gray-600 self-center m-0 border-red-100  disabled:bg-gray-500 text-white cursor-pointer bg-emerald-600 transition-all p-2 px-4"
           >
             Create Account
           </button>
-          {/* center two flex items in classname below */}
-          <button className="">
+          <button className="" type="button" >
             <Link href="/login">Already have an account? Login</Link>
           </button>
           </div>
