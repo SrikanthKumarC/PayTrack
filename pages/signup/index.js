@@ -1,13 +1,13 @@
 import { useState } from "react";
 import Input from "@/components/low-level-components/Input";
 import { Toaster, toast } from "sonner";
-import useAuth from "@/hooks/useAuth";
 import axios from "../../axios";
 import { BarLoader } from "react-spinners";
 import { LoadingContext } from "@/providers/loadingProvider";
-import { useRouter } from "next/router";
 import React from "react";
 import Head from "next/head";
+import Link from "next/link";
+
 const Signup = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -100,7 +100,7 @@ const Signup = () => {
           </button>
           {/* center two flex items in classname below */}
           <button className="">
-            <a href="/login">Already have an account? Login</a>
+            <Link href="/login">Already have an account? Login</Link>
           </button>
           </div>
           
