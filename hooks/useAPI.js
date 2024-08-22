@@ -67,15 +67,15 @@ const useAPI = () => {
     { onSuccess: () => queryClient.invalidateQueries("debts") }
   );
 
-  const hanger = {};
+  const handler = {};
 
-  hanger.addTransaction = addTransactionMutation.mutate;
-  hanger.deleteTransaction = deleteMutation.mutate;
-  hanger.addDebt = addDebtMutation.mutate;
-  hanger.deleteDebt = deleteDebtMutation.mutate;
-  hanger.queryClient = queryClient;
+  handler.addTransaction = addTransactionMutation.mutate;
+  handler.deleteTransaction = deleteMutation.mutate;
+  handler.addDebt = addDebtMutation.mutate;
+  handler.deleteDebt = deleteDebtMutation.mutate;
+  handler.queryClient = queryClient;
 
-  return hanger;
+  return handler;
 };
 
 export default useAPI;
