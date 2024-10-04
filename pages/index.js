@@ -65,6 +65,7 @@ export default function Home() {
           content="Track your expenses and incomes"
           key="desc"
         />
+        <script defer data-domain="paytrack.srikanth.ch" src="https://stats.srikanth.ch/js/script.js"></script>
       </Head>
       <Menu />
       <main className="mx-auto mt-2 max-w-xl">
