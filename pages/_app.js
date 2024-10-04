@@ -8,11 +8,14 @@ import LoadingProvider, { LoadingContext } from "@/providers/loadingProvider";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import React from "react";
+import Script from "next/script";
 
 const queryClient = new QueryClient();
 
 export default function App({ Component, pageProps }) {
   return (
+    <>
+    <Script data-domain="paytrack.srikanth.ch" src="https://stats.srikanth.ch/js/script.js"/>
     <AuthProvider>
       <QueryClientProvider client={queryClient}>
         <LoadingProvider>
@@ -23,5 +26,6 @@ export default function App({ Component, pageProps }) {
         <ReactQueryDevtools initialIsOpen />
       </QueryClientProvider>
     </AuthProvider>
+    </>
   );
 }
